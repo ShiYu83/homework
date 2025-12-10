@@ -14,6 +14,92 @@
 - RabbitMQ
 - Elasticsearch
 
+
+## 目录结构
+
+```
+homework4/
+├── hospital-backend/              # 后端项目
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/hospital/
+│   │   │   │   ├── HospitalApplication.java    # 启动类
+│   │   │   │   ├── config/                     # 配置类
+│   │   │   │   │   ├── WebConfig.java          # Web配置（CORS）
+│   │   │   │   │   └── SecurityConfig.java     # 安全配置
+│   │   │   │   ├── controller/                 # 控制器层
+│   │   │   │   │   ├── PatientController.java
+│   │   │   │   │   ├── AppointmentController.java
+│   │   │   │   │   ├── DepartmentController.java
+│   │   │   │   │   └── DoctorController.java
+│   │   │   │   ├── service/                    # 业务层
+│   │   │   │   │   ├── PatientService.java
+│   │   │   │   │   ├── AppointmentService.java
+│   │   │   │   │   └── impl/                   # 实现类
+│   │   │   │   ├── repository/                 # 数据访问层
+│   │   │   │   │   ├── PatientRepository.java
+│   │   │   │   │   ├── AppointmentRepository.java
+│   │   │   │   │   ├── DepartmentRepository.java
+│   │   │   │   │   ├── DoctorRepository.java
+│   │   │   │   │   └── ScheduleRepository.java
+│   │   │   │   ├── entity/                     # 实体类
+│   │   │   │   │   ├── Patient.java
+│   │   │   │   │   ├── Doctor.java
+│   │   │   │   │   ├── Department.java
+│   │   │   │   │   ├── Schedule.java
+│   │   │   │   │   └── Appointment.java
+│   │   │   │   └── dto/                        # 数据传输对象
+│   │   │   │       ├── PatientRegisterDTO.java
+│   │   │   │       ├── AppointmentCreateDTO.java
+│   │   │   │       └── TimeSlotDTO.java
+│   │   │   └── resources/
+│   │   │       ├── application.yml
+│   │   │       └── application-dev.yml
+│   │   └── test/                                # 测试代码
+│   ├── pom.xml                                  # Maven配置
+│   └── README.md
+│
+├── hospital-frontend/            # 前端项目
+│   ├── src/
+│   │   ├── api/                 # API接口
+│   │   │   ├── request.ts       # Axios配置
+│   │   │   ├── patient.ts
+│   │   │   ├── appointment.ts
+│   │   │   ├── department.ts
+│   │   │   └── doctor.ts
+│   │   ├── views/               # 页面组件
+│   │   │   ├── Home.vue         # 首页
+│   │   │   ├── Register.vue     # 注册页面
+│   │   │   ├── Appointment.vue  # 预约页面
+│   │   │   └── MyAppointments.vue # 我的预约
+│   │   ├── router/              # 路由配置
+│   │   │   └── index.ts
+│   │   ├── App.vue              # 根组件
+│   │   └── main.ts              # 入口文件
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.ts
+│   ├── tsconfig.json
+│   └── README.md
+│
+├── sql/                          # 数据库脚本
+│   └── init.sql                  # 初始化脚本
+│
+├── docker-compose.yml            # Docker Compose配置
+├── start.sh                      # Linux/Mac启动脚本
+├── start.bat                     # Windows启动脚本
+├── .gitignore
+├── README.md                     # 项目说明
+└── 项目文档/                      # 项目文档
+    ├── 1、软件需求规格说明书.md
+    ├── 2、软件概要设计文档.md
+    ├── 3. 软件详细设计文档.md
+    ├── 4. 数据库详细设计文档.md
+    ├── 5. 测试文档.md
+    ├── 6、用户手册.md
+    ├── 环境.md
+    └── 大模型协作过程记录.md
+```
 ### 前端
 - Vue 3 + TypeScript
 - Element Plus
