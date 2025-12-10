@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统</title>
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <!-- 引入Font Awesome CSS -->
+    <link rel="stylesheet" href="dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- 自定义CSS -->
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        /* 头部导航样式 */
+        .header {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-wrap: nowrap;
+            width: 100%;
+        }
+        
+        /* 大屏幕：三栏布局 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header .top-row {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Logo样式 */
+        .header .logo {
+            margin-right: 20px;
+            white-space: nowrap;
+        }
+        
+        /* 搜索框样式 */
+        .header .search-box {
+            flex: 1;
+            margin: 0 20px;
+            max-width: 500px;
+        }
+        
+        /* 登出链接样式 */
+        .header .sign-out-container {
+            white-space: nowrap;
+        }
+        
+        .header .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        /* 菜单图标样式 */
+        .header .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 20px;
+            white-space: nowrap;
+            display: none;
+        }
+        
+        .header .sign-out {
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* 主容器 */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 100px);
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 250px;
+            background-color: #2d3748;
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar.hidden {
+            transform: translateX(-100%);
+            position: absolute;
+            z-index: 1000;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+        
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 8px 0;
+        }
+        
+        .sidebar ul li a:hover {
+            color: #cbd5e0;
+        }
+        
+        .sidebar ul li.active {
+            background-color: #4a5568;
+        }
+        
+        /* 主体内容样式 */
+        .content {
+            flex: 1;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: stretch;
+                padding: 10px;
+            }
+            
+            /* Logo和菜单图标、登出链接的布局 */
+            .header .top-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            
+            .header .logo {
+                margin-right: 0;
+            }
+            
+            .header .menu-icon {
+                margin-right: 0;
+                display: block;
+            }
+            
+            /* 搜索框占满整行 */
+            .header .search-box {
+                width: 100%;
+                margin: 0 0 10px 0;
+            }
+            
+            /* 登出链接样式 */
+            .header .sign-out-container {
+                text-align: right;
+            }
+            
+            .header .search-box {
+                margin: 0 0 10px 0;
+                max-width: none;
+            }
+            
+            .sidebar {
+                position: absolute;
+                z-index: 1000;
+            }
+            
+            .sidebar.hidden {
+                transform: translateX(-100%);
+            }
+            
+            .content {
+                padding: 10px;
+            }
+        }
+        
+        /* 图表容器 */
+        .chart-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="top-row">
+            <div class="logo">Company Logo</div>
+            <div class="menu-icon" id="menuIcon">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+        <div class="search-box">
+            <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <div class="sign-out-container">
+            <a href="#" class="sign-out">Sign out</a>
+        </div>
+    </header>
+    
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <li class="active"><a href="index.html"><i class="fa fa-home"></i> 首页</a></li>
+                <li><a href="products.html"><i class="fa fa-cube"></i> 产品</a></li>
+                <li><a href="customers.html"><i class="fa fa-users"></i> 客户</a></li>
+                <li><a href="#"><i class="fa fa-link"></i> Link</a></li>
+                <li><a href="#" style="color: #6c757d;"><i class="fa fa-ban"></i> Disabled</a></li>
+            </ul>
+        </aside>
+        
+        <!-- 主体内容 -->
+        <main class="content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <h5>柱状图</h5>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <h5>饼图</h5>
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- 引入jQuery -->
+    <script src="dist/jquery-3.6.0.min.js"></script>
+    <!-- 引入Bootstrap JS -->
+    <script src="dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 引入Chart.js -->
+    <script src="https://cdn.staticfile.net/Chart.js/3.9.1/chart.js"></script>
+    
+    <!-- 自定义JS -->
+    <script>
+        // 侧边栏切换功能
+        $(document).ready(function() {
+            $('#menuIcon').click(function() {
+                $('#sidebar').toggleClass('hidden');
+            });
+            
+            // 初始化柱状图
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // 初始化饼图
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow'],
+                    datasets: [{
+                        data: [12, 19, 7],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>
